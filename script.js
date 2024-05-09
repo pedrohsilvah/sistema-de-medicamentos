@@ -1,8 +1,8 @@
 const modal = document.querySelector('.modal-container')
 const tbody = document.querySelector('tbody')
 const sNome = document.querySelector('#m-nome')
-const sTipo = document.querySelector('#m-tipo')
-const sFormaUso = document.querySelector('#m-formauso')
+const sApresentacao = document.querySelector('#m-apresentacao')
+const sViaadm = document.querySelector('#m-viaadm')
 const btnSalvar = document.querySelector('#btnSalvar')
 const searchInput = document.querySelector('#searchInput')
 
@@ -20,13 +20,13 @@ function openModal(edit = false, index = 0) {
 
   if (edit) {
     sNome.value = itens[index].nome
-    sTipo.value = itens[index].tipo
-    sFormaUso.value = itens[index].formauso
+    sApresentacao.value = itens[index].apresentacao
+    sViaadm.value = itens[index].viaadm
     id = index
   } else {
     sNome.value = ''
-    sTipo.value = ''
-    sFormaUso.value = ''
+    sApresentacao.value = ''
+    sViaadm.value = ''
   }
 }
 
@@ -45,8 +45,8 @@ function insertItem(item, index) {
 
   tr.innerHTML = `
     <td>${item.nome}</td>
-    <td>${item.tipo}</td>
-    <td>${item.formauso}</td>
+    <td>${item.apresentacao}</td>
+    <td>${item.viaadm}</td>
     <td class="acao">
       <button onclick="editItem(${index})"><i class='bx bx-edit' ></i></button>
     </td>
@@ -58,7 +58,7 @@ function insertItem(item, index) {
 }
 
 btnSalvar.onclick = e => {
-  if (sNome.value == '' || sTipo.value == '' || sFormaUso.value == '') {
+  if (sNome.value == '' || sApresentacao.value == '' || sViaadm.value == '') {
     return
   }
 
@@ -66,10 +66,10 @@ btnSalvar.onclick = e => {
 
   if (id !== undefined) {
     itens[id].nome = sNome.value
-    itens[id].tipo = sTipo.value
-    itens[id].formauso = sFormaUso.value
+    itens[id].apresentacao = sApresentacao.value
+    itens[id].viaadm = sViaadm.value
   } else {
-    itens.push({'nome': sNome.value, 'tipo': sTipo.value, 'formauso': sFormaUso.value})
+    itens.push({'nome': sNome.value, 'apresentacao': sApresentacao.value, 'viaadm': sViaadm.value})
   }
 
   setItensBD()
@@ -83,8 +83,8 @@ function loadItens(searchText = '') {
   itens = getItensBD().filter(item => {
     const lowerCaseSearchText = searchText.toLowerCase()
     return item.nome.toLowerCase().includes(lowerCaseSearchText) ||
-           item.tipo.toLowerCase().includes(lowerCaseSearchText) ||
-           item.formauso.toLowerCase().includes(lowerCaseSearchText)
+           item.apresentacao.toLowerCase().includes(lowerCaseSearchText) ||
+           item.viaadm.toLowerCase().includes(lowerCaseSearchText)
   })
 
   tbody.innerHTML = ''
